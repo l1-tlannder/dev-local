@@ -94,3 +94,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+source  ~/.oh-my-zsh/custom/themes/powerlevel9k/powerlevel9k.zsh-theme
