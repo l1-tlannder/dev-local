@@ -66,6 +66,7 @@ plugins=(
   aws
   git
   z
+  zsh-nvm
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -106,9 +107,6 @@ POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time virtualenv aws)
 
 source  ~/.oh-my-zsh/custom/themes/powerlevel9k/powerlevel9k.zsh-theme
-
-# zsh-nvm
-source ~/.zsh-nvm/zsh-nvm.plugin.zsh
 
 # Activate ~/py3-venv-dev
 if [ -d "$HOME/py3-venv-dev" ]; then
