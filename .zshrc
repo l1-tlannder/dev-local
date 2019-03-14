@@ -108,6 +108,29 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs histor
 
 source  ~/.oh-my-zsh/custom/themes/powerlevel9k/powerlevel9k.zsh-theme
 
+# Start ssh-agent
+SSH_ENV="$HOME/.ssh/environment"
+
+function start_agent {
+    echo "Initialising new SSH agent..."
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    echo succeeded
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}" > /dev/null
+    /usr/bin/ssh-add;
+}
+
+# Source SSH settings, if applicable
+if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" > /dev/null
+    #ps ${SSH_AGENT_PID} doesn't work under cywgin
+    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+        start_agent;
+    }
+else
+    start_agent;
+fi
+
 # Activate ~/py3-venv-dev
 if [ -d "$HOME/py3-venv-dev" ]; then
   cd $HOME/py3-venv-dev
@@ -118,20 +141,3 @@ if [ -d "$HOME/py3-venv-dev" ]; then
     fi
   fi
 fi
-
-# # automatically run "pipenv shell" if we enter a pipenv project subdirectory
-# # if opening a new terminal, preserve the source directory
-# PROMPT_COMMAND='prompt'
-# precmd() { eval "$PROMPT_COMMAND" }
-# function prompt()
-# {
-#     if [ ! $PIPENV_ACTIVE ]; then
-#       if [ `pipenv --venv 2>/dev/null` ]; then
-#         export PIPENV_INITPWD="$PWD"
-#         pipenv shell
-#       fi
-#     elif [ $PIPENV_INITPWD ] ; then
-#       cd "$PIPENV_INITPWD"
-#       unset PIPENV_INITPWD
-#     fi
-# }
